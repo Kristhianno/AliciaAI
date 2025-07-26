@@ -12,85 +12,623 @@
     <meta property="og:image" content="logo2.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;700&display=swap"
+        rel="stylesheet">
     <style>
-        /* CSS completo omitido para foco na estrutura HTML */
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #0D1117;
-            color: #E2E8F0;
+        :root {
+            --primary: #1F8DF2;
+            --accent: #00E1FF;
+            --bg: #0D1117;
+            --surface: #111826;
+            --text: #E2E8F0;
+            --muted: #94A3B8;
+            --radius: 12px
         }
+
+        * {
+            box-sizing: border-box
+        }
+
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+            background: var(--bg);
+            color: var(--text);
+            font-family: Inter, system-ui, -apple-system, sans-serif;
+            scroll-behavior: smooth
+        }
+
+        h1,
+        h2,
+        h3 {
+            font-family: "Space Grotesk", Inter, sans-serif;
+            letter-spacing: -.02em
+        }
+
+        a {
+            color: var(--primary);
+            text-decoration: none
+        }
+
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            background: rgba(13, 17, 23, .7);
+            backdrop-filter: blur(8px);
+            border-bottom: 1px solid rgba(255, 255, 255, .04)
+        }
+
         .container {
             max-width: 1200px;
             margin: 0 auto;
-            padding: 20px;
+            padding: 0 20px
         }
-        .section {
-            padding: 80px 0;
+
+        .nav {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 64px
         }
-        .card {
-            background-color: #111826;
-            padding: 40px;
-            border-radius: 12px;
-            border: 1px solid rgba(255, 255, 255, 0.05);
+
+        .nav a.logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 700;
+            color: #fff
         }
+
+        .nav ul {
+            display: flex;
+            gap: 24px;
+            list-style: none;
+            margin: 0;
+            padding: 0
+        }
+
+        .nav li a {
+            color: var(--muted);
+            font-weight: 500
+        }
+
+        .nav li a:hover,
+        .nav li a.active {
+            color: #fff
+        }
+
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: #fff;
+            font-size: 24px
+        }
+
+        @media(max-width:840px) {
+            .nav ul {
+                display: none;
+                position: absolute;
+                top: 64px;
+                left: 0;
+                right: 0;
+                background: var(--surface);
+                flex-direction: column;
+                padding: 16px 24px;
+                border-bottom: 1px solid rgba(255, 255, 255, .05)
+            }
+
+            .nav ul.open {
+                display: flex
+            }
+
+            .menu-toggle {
+                display: block
+            }
+        }
+
         .btn {
-            display: inline-block;
-            padding: 12px 24px;
-            background-color: #1F8DF2;
-            color: white;
-            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 12px 20px;
             border-radius: 8px;
-            font-weight: bold;
+            font-weight: 600;
+            transition: all .2s
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: #fff
+        }
+
+        .btn-primary:hover {
+            opacity: .9;
+            transform: translateY(-1px)
+        }
+
+        .btn-ghost {
+            border: 1px solid rgba(255, 255, 255, .1);
+            color: #fff
+        }
+
+        .hero {
+            padding: 120px 0 80px;
+            background: radial-gradient(circle at 30% 10%, rgba(31, 141, 242, .2), transparent 60%), radial-gradient(circle at 80% 0, rgba(0, 225, 255, .08), transparent 40%)
+        }
+
+        .hero h1 {
+            font-size: 48px;
+            line-height: 1.1;
+            margin: 0 0 16px
+        }
+
+        .hero p {
+            max-width: 640px;
+            color: var(--muted);
+            font-size: 18px;
+            margin: 0 0 32px
+        }
+
+        .hero .actions {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap
+        }
+
+        .section {
+            padding: 80px 0
+        }
+
+        .grid {
+            display: grid;
+            gap: 24px
+        }
+
+        .grid-3 {
+            grid-template-columns: repeat(3, 1fr)
+        }
+
+        @media(max-width:960px) {
+            .grid-3 {
+                grid-template-columns: 1fr 1fr
+            }
+        }
+
+        @media(max-width:680px) {
+            .grid-3 {
+                grid-template-columns: 1fr
+            }
+        }
+
+        .card {
+            background: var(--surface);
+            border: 1px solid rgba(255, 255, 255, .03);
+            border-radius: var(--radius);
+            padding: 24px;
+            transition: all .2s
+        }
+
+        .card:hover {
+            transform: translateY(-2px);
+            border-color: rgba(255, 255, 255, .08)
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, .05);
+            color: var(--muted);
+            font-size: 12px;
+            font-weight: 500
+        }
+
+        .feature h3 {
+            margin: 12px 0 6px
+        }
+
+        .muted {
+            color: var(--muted)
+        }
+
+        .title-center {
+            text-align: center;
+            margin-bottom: 48px
+        }
+
+        .steps {
+            counter-reset: step
+        }
+
+        .step {
+            position: relative;
+            padding-left: 46px;
+            margin-bottom: 24px
+        }
+
+        .step:before {
+            counter-increment: step;
+            content: counter(step);
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: var(--primary);
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700
+        }
+
+        .pricing {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px
+        }
+
+        @media(max-width:960px) {
+            .pricing {
+                grid-template-columns: 1fr
+            }
+        }
+
+        .price-card {
+            background: var(--surface);
+            border: 1px solid rgba(255, 255, 255, .05);
+            border-radius: var(--radius);
+            padding: 28px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px
+        }
+
+        .price {
+            font-size: 36px;
+            font-weight: 700
+        }
+
+        .list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px
+        }
+
+        .list li {
+            display: flex;
+            align-items: flex-start;
+            gap: 8px
+        }
+
+        .list li:before {
+            content: "✓";
+            color: #22C55E;
+            margin-top: 2px
+        }
+
+        .testimonials {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px
+        }
+
+        @media(max-width:960px) {
+            .testimonials {
+                grid-template-columns: 1fr
+            }
+        }
+
+        .faq details {
+            background: var(--surface);
+            border: 1px solid rgba(255, 255, 255, .03);
+            border-radius: var(--radius);
+            margin-bottom: 12px;
+            padding: 16px
+        }
+
+        .faq summary {
+            cursor: pointer;
+            font-weight: 600
+        }
+
+        .footer {
+            background: #0B0F14;
+            padding: 40px 0;
+            color: var(--muted);
+            border-top: 1px solid rgba(255, 255, 255, .03)
+        }
+
+        .logo-img {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            object-fit: cover
         }
     </style>
 </head>
 
 <body>
     <header>
-        <div class="container nav">
-            <a href="#" class="logo"><img src="logo2.png" alt="Alicia AI" class="logo-img">Alicia AI</a>
-            <nav>
-                <ul>
-                    <li><a href="#features">Recursos</a></li>
-                    <li><a href="#como-funciona">Como funciona</a></li>
-                    <li><a href="#integracoes">Integrações</a></li>
-                    <li><a href="#precos">Preços</a></li>
-                    <li><a href="#faq">FAQ</a></li>
-                    <li><a href="#contato">Contato</a></li>
-                </ul>
-            </nav>
+        <div class="container nav"><a href="#" class="logo"><img src="logo2.png" alt="Alicia AI" class="logo-img">Alicia
+                AI</a><button class="menu-toggle" aria-label="Abrir menu"
+                onclick="document.querySelector('.nav ul').classList.toggle('open')">☰</button>
+            <ul>
+                <li><a href="#features" class="active">Recursos</a></li>
+                <li><a href="#como-funciona">Como funciona</a></li>
+                <li><a href="#integracoes">Integrações</a></li>
+                <li><a href="#precos">Preços</a></li>
+                <li><a href="#faq">FAQ</a></li>
+                <li><a href="#contato">Contato</a></li>
+            </ul>
         </div>
     </header>
     <main>
-        <!-- Outras seções do site como Hero, Features, etc. -->
-
-        <!-- Seção de contato atualizada -->
+        <section class="hero">
+            <div class="container"><span class="badge">Menos
+                    cliques. Mais resultado.</span>
+                <h1>Alicia AI — Soluções Inteligentes de Automação para o seu negócio.</h1>
+                <p>Configure fluxos
+                    inteligentes, elimine tarefas repetitivas e acompanhe
+                    KPIs em tempo real. Do lead ao faturamento, no piloto
+                    automático.</p>
+                <div class="actions"><a href="#precos" class="btn btn-primary">Ver planos</a><a href="#contato"
+                        class="btn btn-ghost">Falar com
+                        especialista</a></div>
+            </div>
+        </section>
+        <section id="features" class="section">
+            <div class="container">
+                <div class="title-center">
+                    <h2>Por que Alicia AI?</h2>
+                    <p class="muted">Automatizações rápidas, seguras e
+                        orientadas a ROI.</p>
+                </div>
+                <div class="grid grid-3">
+                    <div class="card feature">
+                        <h3>Integrações
+                            ilimitadas</h3>
+                        <p class="muted">Conecte
+                            WhatsApp, ERPs, CRMs, planilhas, gateways de
+                            pagamento e muito mais.</p>
+                    </div>
+                    <div class="card feature">
+                        <h3>KPIs & Dashboards</h3>
+                        <p class="muted">Meça tempo economizado,
+                            conversões, erros evitados e impacto no
+                            faturamento.</p>
+                    </div>
+                    <div class="card feature">
+                        <h3>Onboarding rápido</h3>
+                        <p class="muted">Mapeamos seu processo, desenhamos
+                            o fluxo e entregamos em semanas, não
+                            meses.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section id="como-funciona" class="section">
+            <div class="container">
+                <div class="title-center">
+                    <h2>Como funciona</h2>
+                    <p class="muted">4 passos simples para colocar sua
+                        operação no automático.</p>
+                </div>
+                <div class="card">
+                    <div class="step">
+                        <h3>Descoberta</h3>
+                        <p class="muted">Mapeamos dores, sistemas e metas
+                            (KPI/ROI).</p>
+                    </div>
+                    <div class="step">
+                        <h3>Desenho & Proposta</h3>
+                        <p class="muted">Arquitetura do fluxo, integrações,
+                            prazos e investimento.</p>
+                    </div>
+                    <div class="step">
+                        <h3>Implementação</h3>
+                        <p class="muted">Construção, testes, monitoramento
+                            e handoff.</p>
+                    </div>
+                    <div class="step">
+                        <h3>Suporte & Escala</h3>
+                        <p class="muted">Ajustes contínuos, novos fluxos e
+                            otimizações.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section id="integracoes" class="section">
+            <div class="container">
+                <div class="title-center">
+                    <h2>Integrações</h2>
+                    <p class="muted">Se tem API, webhook, planilha ou banco
+                        — a gente conecta.</p>
+                </div>
+                <div class="grid grid-3">
+                    <div class="card">
+                        <h3>Comercial &
+                            Marketing</h3>
+                        <p class="muted">WhatsApp Business
+                            API, RD Station, HubSpot,
+                            Pipedrive.</p>
+                    </div>
+                    <div class="card">
+                        <h3>Financeiro & Fiscal</h3>
+                        <p class="muted">Asaas, PJBank, NFE.io, Omie, Conta
+                            Azul.</p>
+                    </div>
+                    <div class="card">
+                        <h3>Operações &
+                            Dados</h3>
+                        <p class="muted">Google Sheets,
+                            PostgreSQL, Airtable, Notion,
+                            Slack.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section id="precos" class="section">
+            <div class="container">
+                <div class="title-center">
+                    <h2>Planos & Preços</h2>
+                    <p class="muted">Setup intermediário + mensalidade de
+                        acordo com a complexidade e impacto.</p>
+                </div>
+                <div class="pricing">
+                    <div class="price-card"><span class="badge">Starter</span>
+                        <div class="price">R$3.000</div>
+                        <p class="muted">+
+                            R$400/mês</p>
+                        <ul class="list">
+                            <li>1–2
+                                integrações</li>
+                            <li>1 fluxo
+                                principal</li>
+                            <li>Monitoramento
+                                básico</li>
+                            <li>Suporte
+                                assíncrono</li>
+                        </ul><a href="#contato" class="btn btn-primary">Começar</a>
+                    </div>
+                    <div class="price-card" style="border:1px solid rgba(0,225,255,.2)"><span class="badge">Pro
+                            (Recomendado)</span>
+                        <div class="price">R$6.000</div>
+                        <p class="muted">+
+                            R$1.000/mês</p>
+                        <ul class="list">
+                            <li>3–6
+                                integrações</li>
+                            <li>2–4 fluxos</li>
+                            <li>KPIs
+                                & dashboards</li>
+                            <li>Suporte
+                                prioritário</li>
+                        </ul><a href="#contato" class="btn btn-primary">Escalar
+                            agora</a>
+                    </div>
+                    <div class="price-card"><span class="badge">Enterprise</span>
+                        <div class="price">Sob consulta</div>
+                        <p class="muted">Projetos sob medida</p>
+                        <ul class="list">
+                            <li>Integrações
+                                avançadas/APIs</li>
+                            <li>SLA e
+                                SRE</li>
+                            <li>Governança e
+                                compliance</li>
+                            <li>Time dedicado</li>
+                        </ul><a href="#contato" class="btn btn-primary">Fale com
+                            vendas</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="section" id="cases">
+            <div class="container">
+                <div class="title-center">
+                    <h2>Resultados reais</h2>
+                    <p class="muted">Alguns impactos médios que
+                        entregamos.</p>
+                </div>
+                <div class="testimonials">
+                    <div class="card">
+                        <p><strong>+30% na conversão de
+                                leads</strong> após automação de follow-ups
+                            multicanal.</p><span class="muted">Imobiliária</span>
+                    </div>
+                    <div class="card">
+                        <p><strong>-60% de retrabalho</strong>
+                            integrando ERPs e emissão automática de
+                            notas.</p><span class="muted">Comércio
+                            varejista</span>
+                    </div>
+                    <div class="card">
+                        <p><strong>ROI em 3 meses</strong> com
+                            agendamentos automatizados e lembretes.</p><span class="muted">Serviços
+                            técnicos</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section id="faq" class="section faq">
+            <div class="container">
+                <div class="title-center">
+                    <h2>FAQ</h2>
+                    <p class="muted">Dúvidas mais
+                        comuns</p>
+                </div>
+                <details>
+                    <summary>Em quanto tempo a
+                        automação fica pronta?</summary>
+                    <p>Projetos
+                        “Starter” levam de 1 a 3 semanas. Projetos maiores
+                        podem variar de 4 a 8
+                        semanas.</p>
+                </details>
+                <details>
+                    <summary>Preciso ter
+                        equipe técnica?</summary>
+                    <p>Não. Nós mapeamos,
+                        construímos, monitoramos e treinamos seu
+                        time.</p>
+                </details>
+                <details>
+                    <summary>Vocês atendem
+                        qualquer segmento?</summary>
+                    <p>Sim. Já trabalhamos
+                        com comércio, serviços, jurídico, contábil,
+                        imobiliário e muito
+                        mais.</p>
+                </details>
+                <details>
+                    <summary>Como é
+                        calculado o preço?</summary>
+                    <p>Baseado em
+                        integrações, complexidade do fluxo, volume de dados,
+                        SLAs e impacto esperado
+                        (ROI).</p>
+                </details>
+            </div>
+        </section>
         <section id="contato" class="section">
             <div class="container">
                 <div class="title-center">
                     <h2>Fale com um especialista</h2>
-                    <p class="muted">Conte seu cenário e receba uma estimativa de investimento e ROI.</p>
+                    <p class="muted">Conte seu cenário e receba uma
+                        estimativa de investimento e ROI.</p>
                 </div>
-                <div class="card" style="text-align:center; padding:40px;">
-                    <p>Nos chame diretamente no WhatsApp e converse com nossa equipe!</p>
-                    <a href="https://wa.me/554185308489?text=Olá,%20quero%20falar%20sobre%20automação%20com%20Alicia%20AI" class="btn btn-primary" style="margin-top:20px;">
-                        Atendimento via WhatsApp
-                    </a>
+                <div class="card">
+                    <form action="#" method="post" onsubmit="alert('Recebido! Entraremos em contato.');return false;"
+                        style="display:grid;gap:12px;max-width:600px;margin:0 auto"><input required name="nome"
+                            placeholder="Seu nome"
+                            style="padding:12px 14px;border-radius:8px;border:1px solid rgba(255,255,255,.06);background:#0F141B;color:#fff"><input
+                            required type="email" name="email" placeholder="Seu e-mail"
+                            style="padding:12px 14px;border-radius:8px;border:1px solid rgba(255,255,255,.06);background:#0F141B;color:#fff"><input
+                            name="empresa" placeholder="Empresa"
+                            style="padding:12px 14px;border-radius:8px;border:1px solid rgba(255,255,255,.06);background:#0F141B;color:#fff"><input
+                            name="faturamento" placeholder="Ticket médio/faturamento mensal"
+                            style="padding:12px 14px;border-radius:8px;border:1px solid rgba(255,255,255,.06);background:#0F141B;color:#fff"><textarea
+                            name="necessidade" placeholder="Quais processos você quer automatizar?" rows="4"
+                            style="padding:12px 14px;border-radius:8px;border:1px solid rgba(255,255,255,.06);background:#0F141B;color:#fff"></textarea><button
+                            class="btn btn-primary" type="submit">Enviar</button></form>
                 </div>
             </div>
         </section>
     </main>
     <footer class="footer">
         <div class="container" style="display:flex;flex-direction:column;gap:12px">
-            <div style="display:flex;align-items:center;gap:8px"><img src="logo2.png" alt="Alicia AI" class="logo-img"><strong>Alicia AI</strong></div>
-            <div style="display:flex;gap:16px;flex-wrap:wrap">
-                <a href="#features">Recursos</a>
-                <a href="#precos">Preços</a>
-                <a href="#faq">FAQ</a>
-                <a href="#contato">Contato</a>
-            </div>
-            <small>© <span id="y"></span> Alicia AI. Todos os direitos reservados.</small>
+            <div style="display:flex;align-items:center;gap:8px"><img src="logo2.png" alt="Alicia AI"
+                    class="logo-img"><strong>Alicia AI</strong></div>
+            <div style="display:flex;gap:16px;flex-wrap:wrap"><a href="#features">Recursos</a><a
+                    href="#precos">Preços</a><a href="#faq">FAQ</a><a href="#contato">Contato</a></div><small>© <span
+                    id="y"></span> Alicia AI. Todos os direitos
+                reservados.</small>
         </div>
     </footer>
     <script>document.getElementById("y").textContent = new Date().getFullYear();</script>
